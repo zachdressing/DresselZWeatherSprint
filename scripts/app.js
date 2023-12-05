@@ -76,7 +76,8 @@ function success(position) {
     async function apiCall() {
         const weatherPromise = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`)
         const weatherData = await weatherPromise.json();
-
+        console.log(weatherData.list[0].dt)
+        
         //Use API Data to make and populate info
         let currentTemp = Math.round(weatherData.list[0].main.temp);
         centerTemp.textContent = `${currentTemp}°`
@@ -96,13 +97,33 @@ function success(position) {
         let stateName = locationData[0].state;
 
         //add an if no state do country
-        
+
         centerLocation.textContent = `${placeName}, ${stateName}`;
 
-        //Set up an iterator to parse through the dt_texts
-        //make a do-while to check if the dt_text day # is equal to the previous one, if not , section off into new array
-        //Grab the Hi/Low of those dates by mathing the highesdt of the his and lowest of the lows and then save those
+        //Set up an iterator to parse through the dt
+        //convert the dt to dates
+        //Grab the Hi/Low of those dates by mathing the highest of the his and lowest of the lows and then save those
         //populate into ids
+        
+        //We need arrays of each list object that associates to each day, so day 1 would be the list objects of current day
+        //make a 2d array of days with their 
+
+     let tempMaxs = [];
+     let tempMins = [];
+
+
+        for(let i = 0; i < weatherData.list.length; i++){
+            let unixTime = new Date(weatherData.list[i].dt * 1000)
+            //console.log(unixTime.toLocaleDateString('en-US'))
+            //console.log(unixTime)
+            //console.log(weatherData.list[i].main.temp_max);
+            //console.log(weatherData.list[i].main.temp_min);
+            tempMaxs.push(weatherData.list[i].main.temp_max)
+            tempMins.push(weatherData.list[i].main.temp_min)
+        }
+        //im thinking about using .map to do this better lol
+        console.log(tempMaxs)
+        console.log(tempMins)
     }
     apiCall();
 }
