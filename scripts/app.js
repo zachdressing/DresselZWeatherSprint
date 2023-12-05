@@ -80,26 +80,34 @@ function success(position) {
         //Use API Data to make and populate info
         let currentTemp = Math.round(weatherData.list[0].main.temp);
         centerTemp.textContent = `${currentTemp}°`
-
+        
         let currentMin = Math.round(weatherData.list[0].main.temp_min);
         let currentMax = Math.round(weatherData.list[0].main.temp_max);
         minMax.textContent = `Min ${currentMin}°, Max ${currentMax}°`
 
         //fetch the API for Reverse Geolocation
-        const locationPromise = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`)
+        const locationPromise = await fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=5&appid=${apiKey}`)
         const locationData = await locationPromise.json();
 
         //Add an if statement to check for if in US
 
         //set location in center to location
-        let locality = locationData.locality;
-        let state = locationData.principalSubdivision;
-        centerLocation.textContent = `${locality}, ${state}`;
+        let placeName = locationData[0].name;
+        let stateName = locationData[0].state;
 
-        //seperate the API call by day using the list (check date to find amount remaining)
-        //Grab the lowest min and highest max of each day
+        //add an if no state do country
+        
+        centerLocation.textContent = `${placeName}, ${stateName}`;
+
+        //Set up an iterator to parse through the dt_texts
+        //make a do-while to check if the dt_text day # is equal to the previous one, if not , section off into new array
+        //Grab the Hi/Low of those dates by mathing the highesdt of the his and lowest of the lows and then save those
+        //populate into ids
     }
     apiCall();
 }
 //failure of grabbing location
 function errorFunc() { };
+
+
+
