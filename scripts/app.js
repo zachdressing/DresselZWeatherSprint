@@ -1,11 +1,28 @@
-//import Key
-import {apiKey} from "./environment.js"
+//imports
+import { apiKey } from "./environment.js"
 
-//ID Grabs to Target
+//IDs to Target
 let dateNav = document.getElementById('dateNav');
 let centerDay = document.getElementById('centerDay');
 let centerLocation = document.getElementById('centerLocation')
 let searchVal = document.getElementById('search').value;
+let centerTemp = document.getElementById('centerTemp');
+let minMax = document.getElementById('minMax');
+let day2Day = document.getElementById('day2Day')
+let day2High = document.getElementById('day2High')
+let day2Low = document.getElementById('day2Low')
+let day3Day = document.getElementById('day3Day')
+let day3High = document.getElementById('day3High')
+let day3Low = document.getElementById('day3Low')
+let day4Day = document.getElementById('day4Day')
+let day4High = document.getElementById('day4High')
+let day4Low = document.getElementById('day4Low')
+let day5Day = document.getElementById('day5Day')
+let day5High = document.getElementById('day5High')
+let day5Low = document.getElementById('day5Low')
+let day6Day = document.getElementById('day6Day')
+let day6High = document.getElementById('day6High')
+let day6Low = document.getElementById('day6Low')
 
 //grab date
 const date = new Date();
@@ -15,10 +32,12 @@ let longDay = date.toLocaleDateString('default', { weekday: 'long' });
 let shortDay = date.toLocaleDateString('default', { day: 'numeric' })
 let month = date.toLocaleDateString('default', { month: 'long' });
 
-//Log to confirm working
-console.log(month);
-console.log(longDay);
-console.log(shortDay);
+//set days of week at bottom to next 5 days
+let day2 = new Date(date.getTime() + 86400000).toLocaleDateString('default', { weekday: 'long' });
+let day3 = new Date(date.getTime() + 86400000 * 2).toLocaleDateString('default', { weekday: 'long' });
+let day4 = new Date(date.getTime() + 86400000 * 3).toLocaleDateString('default', { weekday: 'long' });
+let day5 = new Date(date.getTime() + 86400000 * 4).toLocaleDateString('default', { weekday: 'long' });
+let day6 = new Date(date.getTime() + 86400000 * 5).toLocaleDateString('default', { weekday: 'long' });
 
 //Set Date in Navbar to Current Date
 dateNav.textContent = `${longDay}, ${month} ${shortDay}`;
@@ -26,11 +45,18 @@ dateNav.textContent = `${longDay}, ${month} ${shortDay}`;
 //Set Date in Center to Current Date
 centerDay.textContent = `${longDay}`
 
+//set dates in bottom
+day2Day.textContent = `${day2}`
+day3Day.textContent = `${day3}`
+day4Day.textContent = `${day4}`
+day5Day.textContent = `${day5}`
+day6Day.textContent = `${day6}`
+
 //get lat and lon
 let lat;
 let lon;
 
-//Set up grabbing location and what to do when it does
+//Set up location and what to do if it succeeds
 navigator.geolocation.getCurrentPosition(success, errorFunc);
 {
     coords: {
@@ -74,15 +100,6 @@ function success(position) {
         //Grab the lowest min and highest max of each day
     }
     apiCall();
-
 }
-
+//failure of grabbing location
 function errorFunc() { };
-
-
-//grab variables from API (thanks Leo for the help!)
-let centerTemp = document.getElementById('centerTemp');
-let minMax = document.getElementById('minMax');
-
-
-
