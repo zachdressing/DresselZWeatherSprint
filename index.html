@@ -17,40 +17,71 @@
                 <div class="col-5" style="margin: 0% 0% 0% 0%; display: flex; align-items: center;">
                     <p style="color: white; font-size: 30px; margin: 0; font-weight: light;">Search City:</p>
                     <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="" aria-label="Search"
+                        <input id="search" class="form-control me-2" type="search" placeholder="" aria-label="Search"
                             style="border: 0; margin: 10px 10px; background-color: rgba(255, 255, 255, .3); border-radius: 30px; padding-left: 25px; ">
                         <img src="./Assets/search.png" height="25px"
                             style="align-self: center; position: absolute; padding-left: 10px;">
                     </form>
                 </div>
                 <div class="col text-center">
-                    <h1 style="color: white; font-weight: lighter;">Date in Day, Month DD</h1>
+                    <h1 id="dateNav" style="color: white; font-weight: lighter;">Date in Day, Month DD</h1>
                 </div>
                 <div class="col-2 d-flex text-center" style="justify-content: center; align-items: center;">
-                    <h5 style="color: white; font-weight: lighter;">Favorites</h5> <img src="./Assets/loveee (1).png"
-                        width="30px" height="30px">
+                    <h5 style="color: white; font-weight: lighter;">Favorites</h5>
+                    <img id="favoritesBtn" src="./Assets/loveee (1).png" width="30px" height="30px">
                 </div>
             </row>
         </div>
     </header>
-    <div class="container-fluid">
+    <div class="container-fluid w-50" style=" background-color: rgba(255, 255, 255, .3);">
         <div class="row">
-            <div class="col"></div>
-            <div class="col"></div>
-        </div>
-        <div class="row">
-            <div class="col"></div>
-            <div class="col"></div>
+            <div class="col d-flex">
+                <div class="row" style="width: min-content;">
+                    <div class="col">
+                        <h1 id="centerDay">Day</h1><img src="./Assets/anothe broken heart.gif" height="50px" width="50px">
+                    </div>
+                    <div class="col">
+                        <h1 id="centerLocation">Location</h1>
+                        <img id="centerFavorite" src="./Assets/loveee (1).png" width="30px" height="30px">
+                        <h5 id="minMax">Min x°, Max x°</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <h1 id="centerTemp">Temp°</h1>
+                </div>
+            </div>
         </div>
     </div>
     <div class="container-fluid">
-        <div class="row">
-            <div class="col"></div>
-            <div class="col"></div>
+        <div class="col">
+            <div class="row"></div>
+            <div  class="row"><h1 id="day2High"></h1></div>
+            <div class="row"></div>
+            <div  class="row"><h1 id="day2Low"></h1></div>
         </div>
-        <div class="row">
-            <div class="col"></div>
-            <div class="col"></div>
+        <div class="col">
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+        </div>
+        <div class="col">
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+        </div>
+        <div class="col">
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+        </div>
+        <div class="col">
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
         </div>
     </div>
     <script type="module" src="./scripts/app.js"></script>
