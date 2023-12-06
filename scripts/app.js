@@ -5,7 +5,6 @@ import { apiKey } from "./environment.js"
 let dateNav = document.getElementById('dateNav');
 let centerDay = document.getElementById('centerDay');
 let centerLocation = document.getElementById('centerLocation')
-let searchVal = document.getElementById('search').value;
 let searchBar = document.getElementById('search');
 let centerTemp = document.getElementById('centerTemp');
 let minMax = document.getElementById('minMax');
@@ -27,24 +26,17 @@ let day6Low = document.getElementById('day6Low')
 
 //grab date
 let date = new Date();
-const date2 = new Date(date.setDate(date.getDate() + 1))
-const date3 = new Date(date.setDate(date.getDate() + 1))
-const date4 = new Date(date.setDate(date.getDate() + 1))
-const date5 = new Date(date.setDate(date.getDate() + 1))
-const date6 = new Date(date.setDate(date.getDate() + 1))
+date.setDate(date.getDate() + 1)
+date.setDate(date.getDate() + 1)
+date.setDate(date.getDate() + 1)
+date.setDate(date.getDate() + 1)
+date.setDate(date.getDate() + 1)
 let currentDate = new Date();
 
 //format dates
 let longDay = currentDate.toLocaleDateString('default', { weekday: 'long' });
 let shortDay = currentDate.toLocaleDateString('default', { day: 'numeric' })
 let month = currentDate.toLocaleDateString('default', { month: 'long' });
-
-//set days of week at bottom to next 5 days
-let day2 = new Date(currentDate.getTime() + 86400000).toLocaleDateString('default', { weekday: 'long' });
-let day3 = new Date(currentDate.getTime() + 86400000 * 2).toLocaleDateString('default', { weekday: 'long' });
-let day4 = new Date(currentDate.getTime() + 86400000 * 3).toLocaleDateString('default', { weekday: 'long' });
-let day5 = new Date(currentDate.getTime() + 86400000 * 4).toLocaleDateString('default', { weekday: 'long' });
-let day6 = new Date(currentDate.getTime() + 86400000 * 5).toLocaleDateString('default', { weekday: 'long' });
 
 //Set Date in Navbar to Current Date
 dateNav.textContent = `${longDay}, ${month} ${shortDay}`;
@@ -53,11 +45,11 @@ dateNav.textContent = `${longDay}, ${month} ${shortDay}`;
 centerDay.textContent = `${longDay}`
 
 //set dates in bottom
-day2Day.textContent = `${day2}`
-day3Day.textContent = `${day3}`
-day4Day.textContent = `${day4}`
-day5Day.textContent = `${day5}`
-day6Day.textContent = `${day6}`
+day2Day.textContent = `${new Date(currentDate.getTime() + 86400000).toLocaleDateString('default', { weekday: 'long' })}`
+day3Day.textContent = `${new Date(currentDate.getTime() + 86400000 * 2).toLocaleDateString('default', { weekday: 'long' })}`
+day4Day.textContent = `${new Date(currentDate.getTime() + 86400000 * 3).toLocaleDateString('default', { weekday: 'long' })}`
+day5Day.textContent = `${new Date(currentDate.getTime() + 86400000 * 4).toLocaleDateString('default', { weekday: 'long' })}`
+day6Day.textContent = `${new Date(currentDate.getTime() + 86400000 * 5).toLocaleDateString('default', { weekday: 'long' })}`
 
 //gen lat and lon
 let lat;
@@ -107,11 +99,19 @@ async function success(position) {
     let tempMins5 = [];
     let tempMaxs6 = [];
     let tempMins6 = [];
+    let conditions1 = [];
+    let conditions2 = [];
+    let conditions3 = [];
+    let conditions4 = [];
+    let conditions5 = [];
+    let conditions6 = [];
 
     tempMaxs1.push(weatherData.main.temp_max)
     tempMins1.push(weatherData.main.temp_min)
+    conditions1.push(weatherData.weather[0].main)
 
     for (let i = 0; i < forecastData.list.length; i++) {
+
         let unixTime = new Date(forecastData.list[i].dt * 1000)
         let unixTime2 = new Date(forecastData.list[i].dt * 1000 + 86400000)
         let unixTime3 = new Date(forecastData.list[i].dt * 1000 + (86400000 * 2))
@@ -122,26 +122,38 @@ async function success(position) {
         if (unixTime.toLocaleDateString('en-US') === date.toLocaleDateString('en-US')) {
             tempMaxs1.push(forecastData.list[i].main.temp_max)
             tempMins1.push(forecastData.list[i].main.temp_min)
+            conditions1.push(forecastData.list[i].weather[0].main)
+
         }
         else if (unixTime2.toLocaleDateString('en-US') === date.toLocaleDateString('en-US')) {
             tempMaxs2.push(forecastData.list[i].main.temp_max)
             tempMins2.push(forecastData.list[i].main.temp_min)
+            conditions2.push(forecastData.list[i].weather[0].main)
+
         }
         else if (unixTime3.toLocaleDateString('en-US') === date.toLocaleDateString('en-US')) {
             tempMaxs3.push(forecastData.list[i].main.temp_max)
             tempMins3.push(forecastData.list[i].main.temp_min)
+            conditions3.push(forecastData.list[i].weather[0].main)
+
         }
         else if (unixTime4.toLocaleDateString('en-US') === date.toLocaleDateString('en-US')) {
             tempMaxs4.push(forecastData.list[i].main.temp_max)
             tempMins4.push(forecastData.list[i].main.temp_min)
+            conditions4.push(forecastData.list[i].weather[0].main)
+
         }
         else if (unixTime5.toLocaleDateString('en-US') === date.toLocaleDateString('en-US')) {
             tempMaxs5.push(forecastData.list[i].main.temp_max)
             tempMins5.push(forecastData.list[i].main.temp_min)
+            conditions5.push(forecastData.list[i].weather[0].main)
+
         }
         else if (unixTime6.toLocaleDateString('en-US') === date.toLocaleDateString('en-US')) {
             tempMaxs6.push(forecastData.list[i].main.temp_max)
             tempMins6.push(forecastData.list[i].main.temp_min)
+            conditions6.push(forecastData.list[i].weather[0].main)
+
         }
     }
 
@@ -168,15 +180,10 @@ async function success(position) {
     day6High.textContent = `${Math.round(Math.max(...tempMaxs6))}°`
     day6Low.textContent = `${Math.round(Math.min(...tempMins6))}°`
 
-    //Add an if statement to check for if in US
-
     //set location in center to location
     let placeName = locationData[0].name;
     let stateName = locationData[0].state;
     centerLocation.textContent = `${placeName}, ${stateName}`;
-
-    //add an if no state do country
-
 }
 //failure of grabbing location
 function errorFunc(error) {
@@ -185,10 +192,8 @@ function errorFunc(error) {
 
 searchBar.addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
-        console.log(searchBar.value)
         success(searchBar.value)
         e.preventDefault();
         return false;
-
     }
 });
