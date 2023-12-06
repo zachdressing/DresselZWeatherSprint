@@ -73,7 +73,6 @@ async function success(position) {
         lon = position.coords.longitude
     }
 
-
     //Current Weather API
     const weatherPromise = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`)
     const weatherData = await weatherPromise.json()
