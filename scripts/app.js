@@ -25,13 +25,13 @@ let day6High = document.getElementById('day6High')
 let day6Low = document.getElementById('day6Low')
 
 //grab date
-let date = new Date();
-date.setDate(date.getDate() + 1)
-date.setDate(date.getDate() + 1)
-date.setDate(date.getDate() + 1)
-date.setDate(date.getDate() + 1)
-date.setDate(date.getDate() + 1)
-let currentDate = new Date();
+let date = new Date(); //to manip
+let currentDate = new Date(); //to no manip
+
+//Add 1 day to the date 5 times
+for(let i = 0; i < 5; i++){
+    date.setDate(date.getDate() + 1)
+}
 
 //format dates
 let longDay = currentDate.toLocaleDateString('default', { weekday: 'long' });
