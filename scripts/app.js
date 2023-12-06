@@ -8,6 +8,9 @@ let centerLocation = document.getElementById('centerLocation')
 let searchBar = document.getElementById('search');
 let centerTemp = document.getElementById('centerTemp');
 let minMax = document.getElementById('minMax');
+let dropdownBtn = document.getElementById('dropdownBtn')
+let dropdownList = document.getElementById('dropdownList')
+let favoritesBtn = document.getElementById('favoritesBtn')
 let day2Day = document.getElementById('day2Day')
 let day2High = document.getElementById('day2High')
 let day2Low = document.getElementById('day2Low')
@@ -29,20 +32,18 @@ let date = new Date(); //to manip
 let currentDate = new Date(); //to no manip
 
 //Add 1 day to the date 5 times
-for(let i = 0; i < 5; i++){
     date.setDate(date.getDate() + 1)
-}
+    date.setDate(date.getDate() + 1)
+    date.setDate(date.getDate() + 1)
+    date.setDate(date.getDate() + 1)
+    date.setDate(date.getDate() + 1)
 
-//format dates
-let longDay = currentDate.toLocaleDateString('default', { weekday: 'long' });
-let shortDay = currentDate.toLocaleDateString('default', { day: 'numeric' })
-let month = currentDate.toLocaleDateString('default', { month: 'long' });
 
 //Set Date in Navbar to Current Date
-dateNav.textContent = `${longDay}, ${month} ${shortDay}`;
+dateNav.textContent = `${currentDate.toLocaleDateString('default', { weekday: 'long' })}, ${currentDate.toLocaleDateString('default', { month: 'long' })} ${currentDate.toLocaleDateString('default', { day: 'numeric' })}`;
 
 //Set Date in Center to Current Date
-centerDay.textContent = `${longDay}`
+centerDay.textContent = `${currentDate.toLocaleDateString('default', { weekday: 'long' })}`
 
 //set dates in bottom
 day2Day.textContent = `${new Date(currentDate.getTime() + 86400000).toLocaleDateString('default', { weekday: 'long' })}`
@@ -154,12 +155,14 @@ async function success(position) {
             conditions6.push(forecastData.list[i].weather[0].main)
 
         }
+        console.log(unixTime.toLocaleDateString('en-US'))
     }
 
     //Use API Data to make and populate info
     let currentTemp = Math.round(weatherData.main.temp);
     centerTemp.textContent = `${currentTemp}°`
 
+    console.log(tempMins1)
     let currentMin = Math.round(Math.min(...tempMins1));
     let currentMax = Math.round(Math.max(...tempMaxs1));
     minMax.textContent = `Min ${currentMin}°, Max ${currentMax}°`
@@ -189,6 +192,7 @@ function errorFunc(error) {
     error.message
 }
 
+//Search Bar on press functionality
 searchBar.addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
         success(searchBar.value)
@@ -196,3 +200,21 @@ searchBar.addEventListener('keypress', function (e) {
         return false;
     }
 });
+
+let favoritesArray = [];
+//Favorites Button
+centerFavorite.addEventListener('click', function (e){
+    let value = centerLocation.textContent;
+    let listAdd = document.createElement('li', 'button');
+    listAdd.innerHTML = value;
+
+    if(favoritesArray.includes(value)){
+        favoritesArray.pop(value)
+        listAdd.dropdownList.removeChild(listAdd)
+    }
+    else{
+        favoritesArray.push(value);
+        dropdownList.appendChild(listAdd)
+    }
+    console.log(favoritesArray)
+})
