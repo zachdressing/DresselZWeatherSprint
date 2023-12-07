@@ -14,27 +14,24 @@
 <body>
     <header>
         <div class="container-fluid">
-            <row class="d-flex" style="padding:3% 10%">
-                <div class="col-5" style="margin: 0% 0% 0% 0%; display: flex; align-items: center;">
-                    <p style="color: white; font-size: 30px; margin: 0; font-weight: light;">Search City:</p>
+            <row id="headerMainRow" class="d-flex">
+                <div id="headerDiv" class="col-4">
+                    <p>Search City:</p>
                     <form class="d-flex" role="search">
-                        <input id="search" class="rounded-3" type="search" aria-label="Search"
-                            style="border: 0; margin: 10px 10px; background-color: rgba(255, 255, 255, .3); border-radius: 30px; padding-left: 25px; ">
-                        <img src="./Assets/search.png" height="25px"
-                            style="align-self: center; position: absolute; padding-left: 10px;">
+                        <input id="search" type="search" aria-label="Search">
+                        <img src="./Assets/search.png" height="25px">
                     </form>
                 </div>
                 <div class="col text-center">
-                    <h1 id="dateNav" style="color: white; font-weight: lighter;">Monday, January 1</h1>
+                    <h1 id="dateNav">Monday, January 1</h1>
                 </div>
-                <div class="col-3 d-flex text-center" style="justify-content: center; align-items: center;">
-                    <h5 style="color: white; font-weight: lighter;">Favorites</h5>
+                <div id="navFavorites" class="col-1.5 d-flex text-center">
+                    <h5>Favorites</h5>
 
-                    <div class="dropdown">
+                    <div id="dropdown" class="dropdown">
                         <button id="dropdownBtn" class="btn btn-secondary dropdown-toggle" type="button"
-                            data-bs-toggle="dropdown" aria-expanded="false"
-                            style="background-color: transparent; border: none;">
-                            <img id="favoritesBtn" src="./Assets/loveee (1).png" width="30px" height="30px">
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img id="favoritesBtn" src="./Assets/unfavorited.png" width="30px" height="30px">
                         </button>
                         <ul id="dropdownList" class="dropdown-menu">
                         </ul>
@@ -43,29 +40,37 @@
             </row>
         </div>
     </header>
-    <div class="container-fluid w-50 d-flex"
-        style=" background-color: rgba(255, 255, 255, .3); margin-bottom: 10%; flex-direction: column;">
+    <div id="currentWeather" class="container-fluid w-50 d-flex">
         <div class="col">
-            <h1 id="centerDay">Day</h1>
-            <img id="forecastCenter" src="./Assets/cloudImg.png" height="100px" width="100px">
-            <h1 id="centerTemp">Temp°</h1>
+            <div class="row">
+                <h1 id="centerDay">Day</h1>
+            </div>
+            <div class="row">
+               <img id="forecastCenter" src="./Assets/cloud.png" height="100px" width="100px">
+                    <h1 id="centerTemp">Temp°</h1>
+            </div>
         </div>
         <div class="col">
-            <h1 id="centerLocation"></h1>
-            <img id="centerFavorite" src="./Assets/loveee (1).png" width="30px" height="30px">
-            <h5 id="minMax">Min x°, Max x°</h5>
+            <div class="row"> 
+                <div class="col-2"></div>
+                <div class="col-8"><h1 id="centerLocation"></h1></div>
+                <div class="col-2"><img id="centerFavorite" src="./Assets/unfavorited.png" width="30px" height="30px"></div>
+            </div>
+            <div class="row">
+                <h5 id="minMax">Min x°, Max x°</h5>
+            </div>
         </div>
     </div>
-    <div class="container-fluid w-75 d-flex" style=" background-color: rgba(255, 255, 255, .3); height: 500px;">
-        <div class="col text-center">
+    <div id="forecast" class="container-fluid">
+        <div class="col">
             <div class="row">
                 <h5 id="day2Day">Monday</h5>
             </div>
-            <div class="row" style="width: fit-content;"><img id="forecast1" src="./Assets/74024-200.png" height="100px"></div>
+            <div class="row"><img id="forecast1" src="./Assets/Sun.png"></div>
             <div class="row">
                 <h3 id="day2High">TempHi</h3>
             </div>
-            <div class="row"><img src="./Assets/4571480.png" width="25px" height="25px"></div>
+            <div class="row"><img id="reverseCloud" src="./Assets/cloudReverse.png"></div>
             <div class="row">
                 <h3 id="day2Low">TempLo</h3>
             </div>
@@ -74,11 +79,11 @@
             <div class="row">
                 <h5 id="day3Day">tuesday</h5>
             </div>
-            <div class="row"><img id="forecast2" src="./Assets/74024-200.png" width="25px" height="25px"></div>
+            <div class="row"><img id="forecast2" src="./Assets/Sun.png"></div>
             <div class="row">
                 <h3 id="day3High">TempHi</h3>
             </div>
-            <div class="row"><img src="./Assets/4571480.png" width="25px" height="25px"></div>
+            <div class="row"><img id="reverseCloud" src="./Assets/cloudReverse.png"></div>
             <div class="row">
                 <h3 id="day3Low">TempLo</h3>
             </div>
@@ -87,11 +92,11 @@
             <div class="row">
                 <h5 id="day4Day">Monday</h5>
             </div>
-            <div class="row"><img id="forecast3" src="./Assets/74024-200.png" width="25px" height="25px"></div>
+            <div class="row"><img id="forecast3" src="./Assets/Sun.png"></div>
             <div class="row">
                 <h3 id="day4High">TempHi</h3>
             </div>
-            <div class="row"><img src="./Assets/4571480.png" width="25px" height="25px"></div>
+            <div class="row"><img id="reverseCloud" src="./Assets/cloudReverse.png"></div>
             <div class="row">
                 <h3 id="day4Low">TempLo</h3>
             </div>
@@ -100,11 +105,11 @@
             <div class="row">
                 <h5 id="day5Day">Monday</h5>
             </div>
-            <div class="row"><img id="forecast4" src="./Assets/74024-200.png" width="25px" height="25px"></div>
+            <div class="row"><img id="forecast4" src="./Assets/Sun.png"></div>
             <div class="row">
                 <h3 id="day5High">TempHi</h3>
             </div>
-            <div class="row"><img src="./Assets/4571480.png" width="25px" height="25px"></div>
+            <div class="row"><img id="reverseCloud" src="./Assets/cloudReverse.png"></div>
             <div class="row">
                 <h3 id="day5Low">TempLo</h3>
             </div>
@@ -113,11 +118,11 @@
             <div class="row">
                 <h5 id="day6Day">Monday</h5>
             </div>
-            <div class="row"><img id="forecast5" src="./Assets/74024-200.png" width="25px" height="25px"></div>
+            <div class="row"><img id="forecast5" src="./Assets/Sun.png"></div>
             <div class="row">
                 <h3 id="day6High">TempHi</h3>
             </div>
-            <div class="row"><img src="./Assets/4571480.png" width="25px" height="25px"></div>
+            <div class="row"><img id="reverseCloud" src="./Assets/cloudReverse.png"></div>
             <div class="row">
                 <h3 id="day6Low">TempLo</h3>
             </div>

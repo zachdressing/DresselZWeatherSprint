@@ -151,8 +151,9 @@ async function success(position) {
             tempMins6.push(forecastData.list[i].main.temp_min)
             conditions6.push(forecastData.list[i].weather[0].main)
         }
-    }
 
+    }
+    
 
     //Use API Data to make and populate info
     let currentTemp = Math.round(weatherData.main.temp);
@@ -177,6 +178,49 @@ async function success(position) {
     day6High.textContent = `${Math.round(Math.max(...tempMaxs6))}°`
     day6Low.textContent = `${Math.round(Math.min(...tempMins6))}°`
 
+
+    let frequent1 = mostFrequent(conditions1, conditions1.length)
+    let frequent2 = mostFrequent(conditions2, conditions2.length)
+    let frequent3 = mostFrequent(conditions2, conditions2.length)
+    let frequent4 = mostFrequent(conditions2, conditions2.length)
+    let frequent5 = mostFrequent(conditions2, conditions2.length)
+    let frequent6 = mostFrequent(conditions2, conditions2.length)
+
+    switch (frequent1) {
+        case "clear sky":
+            forecastCenter.src = "../assets/sun.png";
+            break;
+        case "rain":
+            forecastCenter.src = '../assets/rainy.png';
+            break;
+        case "few clouds":
+            forecastCenter.src = "../assets/cloudy.png";
+            break;
+        case "scattered clouds":
+            forecastCenter.src = "../assets/cloud.png";
+            break;
+        case "broken clouds":
+            forecastCenter.src = "../assets/cloud.png";
+            break;
+        case "shower rain":
+            forecastCenter.src = "../assets/rainy.png";
+            break;
+        case "thunderstorm":
+            forecastCenter.src = "../assets/storm.png";
+            break;
+        case "snow":
+            forecastCenter.src = "../assets/snowflake.png";
+            break;
+        case "haze":
+            forecastCenter.src = "../assets/haze.png";
+            break;
+        case "light rain":
+            forecastCenter.src = "../assets/rainy.png";
+            break;
+        default:
+            break;
+    }
+
     //set location in center to location
     let placeName = locationData[0].name;
     let stateName = locationData[0].state;
@@ -200,29 +244,69 @@ searchBar.addEventListener('keypress', function (e) {
 });
 
 //Favorites Button
-
-let listAdd = document.createElement('li');
-listAdd.innerHTML = `${centerLocation.textContent}`;
-
-let removeBtn = document.createElement('button')
-//removeBtn.innerHTML = x;
-
-function genFavs() {
-    for (let i = 0; i < localStorage.length; i++) {
-        dropdownList.appendChild(listAdd)
+//Thanks Caleb for the Function!
+function mostFrequent(arr, n) {
+    // Insert all elements in hash. 
+    var hash = new Map();
+    for (var i = 0; i < n; i++) {
+        if (hash.has(arr[i]))
+            hash.set(arr[i], hash.get(arr[i]) + 1)
+        else
+            hash.set(arr[i], 1)
     }
+
+    // find the max frequency 
+    var max_count = 0, res = -1;
+    hash.forEach((value, key) => {
+        if (max_count < value) {
+            res = key;
+            max_count = value;
+        }
+    });
+
+    return res;
 }
 
-centerFavorite.addEventListener('click', function (e) {
-    if (localStorage.getItem(`${centerLocation.textContent}`)) {
-        localStorage.removeItem(`${centerLocation.textContent}`)
+//On click, search through Storage, grab the ID/Values and make a set of li objects located in dropdownList of those values
+centerFavorite.addEventListener('click', function getFav() {
+    let favoritesArr = []
+    let li = document.createElement('li');
+    let rBtn = document.createElement('button')
+    for (let i = 0; i <= localStorage.length; i++) {
+        let keyId = localStorage.key(i)
+        favoritesArr = JSON.parse(localStorage.getItem(i));
+        console.log(favoritesArr)
+        //console.log(keyId)
+        //console.log(localStorage.length)
+
+        //if it does, delete the key from local storage and generate list of favorites
+        if (keyId === centerLocation.textContent) {
+            console.log('Found it')
+            centerFavorite.src = './Assets/unfavorited.png'
+            localStorage.removeItem(keyId)
+            dropdownList.removeChild(li)
+        }
+
+        //if they dont, save to local storage and generate list of favorites
+        else {
+            centerFavorite.src = './Assets/favorited.png'
+            localStorage.setItem(centerLocation.textContent, centerLocation.textContent)
+            console.log('No Find')
+            for (let i = 0; i < localStorage.length; i++) {
+                let key = localStorage.key(i)
+                let value = localStorage.getItem(key)
+                li.innerText = value
+                dropdownList.appendChild(li);
+            }
+
+        }
     }
-    else {
-        localStorage.setItem(`${centerLocation.textContent}`, `${centerLocation.textContent}`)
-    }
-    genFavs();
+
 })
 
 
 //Needs to add the content from the Local Storage to the Dropdown
-//
+
+//gen an array of localStorage Values/Keys and then gen a set of list items on startup equal to the array values
+
+//Parse through array to see if any of the keys match any of the actual localStorage keys
