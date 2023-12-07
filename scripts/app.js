@@ -26,6 +26,13 @@ let day5Low = document.getElementById('day5Low')
 let day6Day = document.getElementById('day6Day')
 let day6High = document.getElementById('day6High')
 let day6Low = document.getElementById('day6Low')
+let forecast1 = document.getElementById('forecast1')
+let forecast2 = document.getElementById('forecast2')
+let forecast3 = document.getElementById('forecast3')
+let forecast4 = document.getElementById('forecast4')
+let forecast5 = document.getElementById('forecast5')
+let forecastCenter = document.getElementById('forecastCenter')
+
 
 //grab date
 let currentDate = new Date(); //to no manip
@@ -84,6 +91,8 @@ async function success(position) {
     //fetch the API for Reverse Geolocation
     const locationPromise = await fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=5&appid=${apiKey}`)
     const locationData = await locationPromise.json();
+
+
 
     //Gen Max and Min Arrays
     let tempMaxs1 = [];
@@ -144,6 +153,7 @@ async function success(position) {
         }
     }
 
+
     //Use API Data to make and populate info
     let currentTemp = Math.round(weatherData.main.temp);
     centerTemp.textContent = `${currentTemp}°`
@@ -172,10 +182,13 @@ async function success(position) {
     let stateName = locationData[0].state;
     centerLocation.textContent = `${placeName}, ${stateName}`;
 }
+
+
 //failure of grabbing location
 function errorFunc(error) {
     error.message
 }
+
 
 //Search Bar on press functionality
 searchBar.addEventListener('keypress', function (e) {
@@ -186,20 +199,30 @@ searchBar.addEventListener('keypress', function (e) {
     }
 });
 
-let favoritesArray = [];
 //Favorites Button
-centerFavorite.addEventListener('click', function (e) {
-    let value = centerLocation.textContent;
-    let listAdd = document.createElement('li', 'button');
-    listAdd.innerHTML = value;
 
-    if (favoritesArray.includes(value)) {
-        favoritesArray.pop(value)
-        listAdd.dropdownList.removeChild(listAdd)
-    }
-    else {
-        favoritesArray.push(value);
+let listAdd = document.createElement('li');
+listAdd.innerHTML = `${centerLocation.textContent}`;
+
+let removeBtn = document.createElement('button')
+//removeBtn.innerHTML = x;
+
+function genFavs() {
+    for (let i = 0; i < localStorage.length; i++) {
         dropdownList.appendChild(listAdd)
     }
-    console.log(favoritesArray)
+}
+
+centerFavorite.addEventListener('click', function (e) {
+    if (localStorage.getItem(`${centerLocation.textContent}`)) {
+        localStorage.removeItem(`${centerLocation.textContent}`)
+    }
+    else {
+        localStorage.setItem(`${centerLocation.textContent}`, `${centerLocation.textContent}`)
+    }
+    genFavs();
 })
+
+
+//Needs to add the content from the Local Storage to the Dropdown
+//

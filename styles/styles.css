@@ -1,7 +1,20 @@
 body {
     background: url(../Assets/tree.jpeg);
-    background-size: fill;
-    background-position: fixed;
+    background-size: cover;
     background-repeat: no-repeat;
 }
 
+.row{
+    width: fit-content;
+}
+
+.col{
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+#forecast1{
+    width: 100px;
+    height: 100px;
+}
