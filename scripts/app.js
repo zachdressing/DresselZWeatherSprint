@@ -28,15 +28,14 @@ let day6High = document.getElementById('day6High')
 let day6Low = document.getElementById('day6Low')
 
 //grab date
-let date = new Date(); //to manip
 let currentDate = new Date(); //to no manip
 
 //Add 1 day to the date 5 times
-    date.setDate(date.getDate() + 1)
-    date.setDate(date.getDate() + 1)
-    date.setDate(date.getDate() + 1)
-    date.setDate(date.getDate() + 1)
-    date.setDate(date.getDate() + 1)
+let date2 = new Date(currentDate.getTime() + 86400000)
+let date3 = new Date(currentDate.getTime() + 86400000 * 2)
+let date4 = new Date(currentDate.getTime() + 86400000 * 3)
+let date5 = new Date(currentDate.getTime() + 86400000 * 4)
+let date6 = new Date(currentDate.getTime() + 86400000 * 5)
 
 
 //Set Date in Navbar to Current Date
@@ -111,58 +110,44 @@ async function success(position) {
     conditions1.push(weatherData.weather[0].main)
 
     for (let i = 0; i < forecastData.list.length; i++) {
-
         let unixTime = new Date(forecastData.list[i].dt * 1000)
-        let unixTime2 = new Date(forecastData.list[i].dt * 1000 + 86400000)
-        let unixTime3 = new Date(forecastData.list[i].dt * 1000 + (86400000 * 2))
-        let unixTime4 = new Date(forecastData.list[i].dt * 1000 + (86400000 * 3))
-        let unixTime5 = new Date(forecastData.list[i].dt * 1000 + (86400000 * 4))
-        let unixTime6 = new Date(forecastData.list[i].dt * 1000 + (86400000 * 5))
-
-        if (unixTime.toLocaleDateString('en-US') === date.toLocaleDateString('en-US')) {
+        if (unixTime.toLocaleDateString('default') === currentDate.toLocaleDateString('default')) {
             tempMaxs1.push(forecastData.list[i].main.temp_max)
             tempMins1.push(forecastData.list[i].main.temp_min)
             conditions1.push(forecastData.list[i].weather[0].main)
-
         }
-        else if (unixTime2.toLocaleDateString('en-US') === date.toLocaleDateString('en-US')) {
+        else if (unixTime.toLocaleDateString('default') === date2.toLocaleDateString('default')) {
             tempMaxs2.push(forecastData.list[i].main.temp_max)
             tempMins2.push(forecastData.list[i].main.temp_min)
             conditions2.push(forecastData.list[i].weather[0].main)
-
         }
-        else if (unixTime3.toLocaleDateString('en-US') === date.toLocaleDateString('en-US')) {
+        else if (unixTime.toLocaleDateString('default') === date3.toLocaleDateString('default')) {
             tempMaxs3.push(forecastData.list[i].main.temp_max)
             tempMins3.push(forecastData.list[i].main.temp_min)
             conditions3.push(forecastData.list[i].weather[0].main)
-
         }
-        else if (unixTime4.toLocaleDateString('en-US') === date.toLocaleDateString('en-US')) {
+        else if (unixTime.toLocaleDateString('default') === date4.toLocaleDateString('default')) {
+
             tempMaxs4.push(forecastData.list[i].main.temp_max)
             tempMins4.push(forecastData.list[i].main.temp_min)
             conditions4.push(forecastData.list[i].weather[0].main)
-
         }
-        else if (unixTime5.toLocaleDateString('en-US') === date.toLocaleDateString('en-US')) {
+        else if (unixTime.toLocaleDateString('default') === date5.toLocaleDateString('default')) {
             tempMaxs5.push(forecastData.list[i].main.temp_max)
             tempMins5.push(forecastData.list[i].main.temp_min)
             conditions5.push(forecastData.list[i].weather[0].main)
-
         }
-        else if (unixTime6.toLocaleDateString('en-US') === date.toLocaleDateString('en-US')) {
+        else if (unixTime.toLocaleDateString('default') === date6.toLocaleDateString('default')) {
             tempMaxs6.push(forecastData.list[i].main.temp_max)
             tempMins6.push(forecastData.list[i].main.temp_min)
             conditions6.push(forecastData.list[i].weather[0].main)
-
         }
-        console.log(unixTime.toLocaleDateString('en-US'))
     }
 
     //Use API Data to make and populate info
     let currentTemp = Math.round(weatherData.main.temp);
     centerTemp.textContent = `${currentTemp}°`
 
-    console.log(tempMins1)
     let currentMin = Math.round(Math.min(...tempMins1));
     let currentMax = Math.round(Math.max(...tempMaxs1));
     minMax.textContent = `Min ${currentMin}°, Max ${currentMax}°`
@@ -203,16 +188,16 @@ searchBar.addEventListener('keypress', function (e) {
 
 let favoritesArray = [];
 //Favorites Button
-centerFavorite.addEventListener('click', function (e){
+centerFavorite.addEventListener('click', function (e) {
     let value = centerLocation.textContent;
     let listAdd = document.createElement('li', 'button');
     listAdd.innerHTML = value;
 
-    if(favoritesArray.includes(value)){
+    if (favoritesArray.includes(value)) {
         favoritesArray.pop(value)
         listAdd.dropdownList.removeChild(listAdd)
     }
-    else{
+    else {
         favoritesArray.push(value);
         dropdownList.appendChild(listAdd)
     }
