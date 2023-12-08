@@ -1,5 +1,9 @@
 //imports
-import { apiKey } from "./environment.js"
+//import { apiKey } from "./environment.js"
+
+
+//Added so Vercel and Downloads Work also who cares its free
+let apiKey = '85f5ee4cb9ec8763732f475eee4bf5af'
 
 
 //IDs to Target
@@ -194,8 +198,14 @@ async function success(position) {
 
     //set location in center to location
     let placeName = locationData[0].name;
-    let stateName = locationData[0].state;
-    centerLocation.textContent = `${placeName}, ${stateName}`;
+    if(locationData[0].state){
+        let stateName = locationData[0].state;
+        centerLocation.textContent = `${placeName}, ${stateName}`;
+    }
+    else{
+        centerLocation.textContent = `${placeName}`;
+    }
+    
 
     let frequent1 = mostFrequent(conditions1, conditions1.length)
     let frequent2 = mostFrequent(conditions2, conditions2.length)
@@ -259,7 +269,14 @@ async function conditionsCheck(string, forecast) {
         default:
             break;
     }
-    centerFavorite.src = './Assets/unfavorited.png'
+
+    if (favoritesArr.includes(centerLocation.textContent)) {
+        centerFavorite.src = './Assets/Favorited.png'
+    }
+    else {
+        centerFavorite.src = './Assets/unfavorited.png'
+    }
+
 }
 
 
@@ -333,12 +350,13 @@ centerFavorite.addEventListener('click', function getFav() {
         let index = favoritesArr.indexOf(centerLocation.textContent)
         favoritesArr.splice(index)
         localStorage.setItem('favorites', favoritesArr)
-        favoritesBtn.src = './Assets/unfavorited.png'
+        centerFavorite.src = './Assets/unfavorited.png'
     }
     else {
         favoritesArr.push(centerLocation.textContent)
         localStorage.setItem('favorites', favoritesArr)
-        favoritesBtn.src = './Assets/Favorited.png'
+        centerFavorite.src = './Assets/Favorited.png'
+
     }
     iniFavs();
 
