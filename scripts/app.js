@@ -1,6 +1,7 @@
 //imports
 import { apiKey } from "./environment.js"
 
+
 //IDs to Target
 let dateNav = document.getElementById('dateNav');
 let centerDay = document.getElementById('centerDay');
@@ -32,6 +33,14 @@ let forecast3 = document.getElementById('forecast3')
 let forecast4 = document.getElementById('forecast4')
 let forecast5 = document.getElementById('forecast5')
 let forecast6 = document.getElementById('forecast6')
+let liValue;
+
+
+//Favorites
+let favoritesArr = [];
+
+//clear favs
+dropdownList.innerText = ''
 
 
 //grab date
@@ -70,6 +79,12 @@ async function success(position) {
 
     if (searchBar.value) {
         const citySearch = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${searchBar.value}&limit=5&appid=${apiKey}`);
+        const cityName = await citySearch.json();
+        lat = cityName[0].lat;
+        lon = cityName[0].lon;
+    }
+    else if (liValue) {
+        const citySearch = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${liValue}&limit=5&appid=${apiKey}`);
         const cityName = await citySearch.json();
         lat = cityName[0].lat;
         lon = cityName[0].lon;
@@ -151,7 +166,6 @@ async function success(position) {
             tempMins6.push(forecastData.list[i].main.temp_min)
             conditions6.push(forecastData.list[i].weather[0].main)
         }
-
     }
 
 
@@ -190,14 +204,6 @@ async function success(position) {
     let frequent5 = mostFrequent(conditions5, conditions5.length)
     let frequent6 = mostFrequent(conditions6, conditions6.length)
 
-
-    console.log('Center' + frequent1)
-    console.log('1' +frequent2)
-    console.log('2' +frequent3)
-    console.log('3' +frequent4)
-    console.log('4' +frequent5)
-    console.log('5' +frequent6)
-
     conditionsCheck(frequent1, forecast1);
     conditionsCheck(frequent2, forecast2);
     conditionsCheck(frequent3, forecast3);
@@ -206,15 +212,13 @@ async function success(position) {
     conditionsCheck(frequent6, forecast6);
 }
 
-
 //failure of grabbing location
 function errorFunc(error) {
     error.message
 }
 
-
-
-async function conditionsCheck(string, forecast){
+//Thanks Caeleb (again!)
+async function conditionsCheck(string, forecast) {
     switch (string) {
         case "clear sky":
             forecast.src = "../assets/sun.png";
@@ -255,18 +259,29 @@ async function conditionsCheck(string, forecast){
         default:
             break;
     }
+    centerFavorite.src = './Assets/unfavorited.png'
 }
 
 
+iniFavs();
 
 //Search Bar on press functionality
 searchBar.addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
         success(searchBar.value)
+        searchBar.value = '';
+
         e.preventDefault();
         return false;
     }
 });
+
+function click(evt) {
+    liValue = evt.target.innerText.split(',')[0];
+    success(liValue)
+}
+dropdownList.addEventListener('click', click, false);
+
 
 //Favorites Button
 //Thanks Caleb for the Function!
@@ -292,46 +307,39 @@ function mostFrequent(arr, n) {
     return res;
 }
 
-//On click, search through Storage, grab the ID/Values and make a set of li objects located in dropdownList of those values
-centerFavorite.addEventListener('click', function getFav() {
-    let favoritesArr = []
-    let li = document.createElement('li');
-    let rBtn = document.createElement('button')
-    for (let i = 0; i <= localStorage.length; i++) {
-        let keyId = localStorage.key(i)
-        favoritesArr = JSON.parse(localStorage.getItem(i));
-        console.log(favoritesArr)
-        //console.log(keyId)
-        //console.log(localStorage.length)
 
-        //if it does, delete the key from local storage and generate list of favorites
-        if (keyId === centerLocation.textContent) {
-            console.log('Found it')
-            centerFavorite.src = './Assets/unfavorited.png'
-            localStorage.removeItem(keyId)
-            dropdownList.removeChild(li)
-        }
-
-        //if they dont, save to local storage and generate list of favorites
-        else {
-            centerFavorite.src = './Assets/favorited.png'
-            localStorage.setItem(centerLocation.textContent, centerLocation.textContent)
-            console.log('No Find')
-            for (let i = 0; i < localStorage.length; i++) {
-                let key = localStorage.key(i)
-                let value = localStorage.getItem(key)
-                li.innerText = value
-                dropdownList.appendChild(li);
-            }
-
-        }
+//credit to Ry-♦ https://stackoverflow.com/questions/11128700/create-a-ul-and-fill-it-based-on-a-passed-array 
+function makeUL(array) {
+    // Create the list element:
+    //var list = document.createElement('ul');
+    for (var i = 0; i < array.length; i++) {
+        // Create the list item:
+        var item = document.createElement('li');
+        item.id = 'listItem' + i;
+        // Set its contents:
+        item.appendChild(document.createTextNode(array[i]));
+        // Add it to the list:
+        dropdownList.appendChild(item);
     }
+}
+
+function iniFavs() {
+    dropdownList.innerText = '';
+    makeUL(favoritesArr);
+}
+
+centerFavorite.addEventListener('click', function getFav() {
+    if (favoritesArr.includes(centerLocation.textContent)) {
+        let index = favoritesArr.indexOf(centerLocation.textContent)
+        favoritesArr.splice(index)
+        localStorage.setItem('favorites', favoritesArr)
+        favoritesBtn.src = './Assets/unfavorited.png'
+    }
+    else {
+        favoritesArr.push(centerLocation.textContent)
+        localStorage.setItem('favorites', favoritesArr)
+        favoritesBtn.src = './Assets/Favorited.png'
+    }
+    iniFavs();
 
 })
-
-
-//Needs to add the content from the Local Storage to the Dropdown
-
-//gen an array of localStorage Values/Keys and then gen a set of list items on startup equal to the array values
-
-//Parse through array to see if any of the keys match any of the actual localStorage keys

@@ -3,6 +3,10 @@
     color: white;
 }
 
+li :hover{
+    filter: brightness(.5);
+}
+
 #search{
     text-align: start !important;
 }
@@ -59,7 +63,11 @@ body {
     align-items: center;
 }
 
-#navFavorites h5 {
+#dropdown :hover{
+    filter: brightness(.50);
+}
+
+#favoritesBtn h5 {
     color: white;
     font-weight: lighter;
 }
@@ -111,6 +119,11 @@ body {
     width: 50px;
     margin-top: 50px;
 }
+
+#centerFavorite :hover{
+    filter: brightness(.5);
+}
+
 
 #forecast {
     background-color: rgba(255, 255, 255, .2);
