@@ -82,13 +82,13 @@ navigator.geolocation.getCurrentPosition(success, errorFunc);
 async function success(position) {
 
     if (searchBar.value) {
-        const citySearch = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${searchBar.value}&limit=5&appid=${apiKey}`);
+        const citySearch = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${searchBar.value}&limit=5&appid=${apiKey}`);
         const cityName = await citySearch.json();
         lat = cityName[0].lat;
         lon = cityName[0].lon;
     }
     else if (liValue) {
-        const citySearch = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${liValue}&limit=5&appid=${apiKey}`);
+        const citySearch = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${liValue}&limit=5&appid=${apiKey}`);
         const cityName = await citySearch.json();
         lat = cityName[0].lat;
         lon = cityName[0].lon;
@@ -108,7 +108,7 @@ async function success(position) {
     const forecastData = await forecastPromise.json();
 
     //fetch the API for Reverse Geolocation
-    const locationPromise = await fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=5&appid=${apiKey}`)
+    const locationPromise = await fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=5&appid=${apiKey}`)
     const locationData = await locationPromise.json();
 
 
