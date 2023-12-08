@@ -3,7 +3,7 @@
     color: white;
 }
 
-#forecastCenter, #forecast1, #forecast2, #forecast3, #forecast4, #forecast5{
+#forecast1, #forecast2, #forecast3, #forecast4, #forecast5, #forecast6{
     filter: invert(1);
 }
 
@@ -97,8 +97,8 @@ body {
     padding-top: 20px;
 }
 
-#forecastCenter{
-    width: 150px;
+#forecast1{
+    width: 175px;
     height: 150px;
     margin-left:15%;
 }

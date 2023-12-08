@@ -31,7 +31,7 @@ let forecast2 = document.getElementById('forecast2')
 let forecast3 = document.getElementById('forecast3')
 let forecast4 = document.getElementById('forecast4')
 let forecast5 = document.getElementById('forecast5')
-let forecastCenter = document.getElementById('forecastCenter')
+let forecast6 = document.getElementById('forecast6')
 
 
 //grab date
@@ -153,7 +153,7 @@ async function success(position) {
         }
 
     }
-    
+
 
     //Use API Data to make and populate info
     let currentTemp = Math.round(weatherData.main.temp);
@@ -178,53 +178,32 @@ async function success(position) {
     day6High.textContent = `${Math.round(Math.max(...tempMaxs6))}°`
     day6Low.textContent = `${Math.round(Math.min(...tempMins6))}°`
 
-
-    let frequent1 = mostFrequent(conditions1, conditions1.length)
-    let frequent2 = mostFrequent(conditions2, conditions2.length)
-    let frequent3 = mostFrequent(conditions2, conditions2.length)
-    let frequent4 = mostFrequent(conditions2, conditions2.length)
-    let frequent5 = mostFrequent(conditions2, conditions2.length)
-    let frequent6 = mostFrequent(conditions2, conditions2.length)
-
-    switch (frequent1) {
-        case "clear sky":
-            forecastCenter.src = "../assets/sun.png";
-            break;
-        case "rain":
-            forecastCenter.src = '../assets/rainy.png';
-            break;
-        case "few clouds":
-            forecastCenter.src = "../assets/cloudy.png";
-            break;
-        case "scattered clouds":
-            forecastCenter.src = "../assets/cloud.png";
-            break;
-        case "broken clouds":
-            forecastCenter.src = "../assets/cloud.png";
-            break;
-        case "shower rain":
-            forecastCenter.src = "../assets/rainy.png";
-            break;
-        case "thunderstorm":
-            forecastCenter.src = "../assets/storm.png";
-            break;
-        case "snow":
-            forecastCenter.src = "../assets/snowflake.png";
-            break;
-        case "haze":
-            forecastCenter.src = "../assets/haze.png";
-            break;
-        case "light rain":
-            forecastCenter.src = "../assets/rainy.png";
-            break;
-        default:
-            break;
-    }
-
     //set location in center to location
     let placeName = locationData[0].name;
     let stateName = locationData[0].state;
     centerLocation.textContent = `${placeName}, ${stateName}`;
+
+    let frequent1 = mostFrequent(conditions1, conditions1.length)
+    let frequent2 = mostFrequent(conditions2, conditions2.length)
+    let frequent3 = mostFrequent(conditions3, conditions3.length)
+    let frequent4 = mostFrequent(conditions4, conditions4.length)
+    let frequent5 = mostFrequent(conditions5, conditions5.length)
+    let frequent6 = mostFrequent(conditions6, conditions6.length)
+
+
+    console.log('Center' + frequent1)
+    console.log('1' +frequent2)
+    console.log('2' +frequent3)
+    console.log('3' +frequent4)
+    console.log('4' +frequent5)
+    console.log('5' +frequent6)
+
+    conditionsCheck(frequent1, forecast1);
+    conditionsCheck(frequent2, forecast2);
+    conditionsCheck(frequent3, forecast3);
+    conditionsCheck(frequent4, forecast4);
+    conditionsCheck(frequent5, forecast5);
+    conditionsCheck(frequent6, forecast6);
 }
 
 
@@ -232,6 +211,52 @@ async function success(position) {
 function errorFunc(error) {
     error.message
 }
+
+
+
+async function conditionsCheck(string, forecast){
+    switch (string) {
+        case "clear sky":
+            forecast.src = "../assets/sun.png";
+            break;
+        case "Clear":
+            forecast.src = "../assets/sun.png";
+            break;
+        case "rain":
+            forecast.src = '../assets/rainy.png';
+            break;
+        case "Clouds":
+            forecast.src = '../assets/cloud.png';
+            break;
+        case "few clouds":
+            forecast.src = "../assets/cloudy.png";
+            break;
+        case "scattered clouds":
+            forecast.src = "../assets/cloud.png";
+            break;
+        case "broken clouds":
+            forecast.src = "../assets/cloud.png";
+            break;
+        case "shower rain":
+            forecast.src = "../assets/rainy.png";
+            break;
+        case "thunderstorm":
+            forecast.src = "../assets/storm.png";
+            break;
+        case "snow":
+            forecast.src = "../assets/snowflake.png";
+            break;
+        case "haze":
+            forecast.src = "../assets/haze.png";
+            break;
+        case "light rain":
+            forecast.src = "../assets/rainy.png";
+            break;
+        default:
+            break;
+    }
+}
+
 
 
 //Search Bar on press functionality
