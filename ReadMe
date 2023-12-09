@@ -3,5 +3,8 @@
 //Weather Sprint: Make a website that accurately displays weather data and follows requirements set out by figma
 //12/4 Did basics, started JS
 //12/5 Finished basics of html page, dived deeper into JS
+//12/6 Added 5 day forecast code
+//12/7 Added major Css and Html Change
+//12/8 Finalized Project
 //Peer Review: Awesome job! Your weather application works perfectly. I liked that you added a function to check for the most frequent weather condition of the day. (I might add that to my application in the future.) I do have just a few suggestions: 1. Make the weather icon for today a bit smaller to better match the prototype 2. If possible, perhaps make the icons filled to better match the prototype. If not, it still looks great. 3. Maybe make the magnifying glass a clickable search button as well?
 //By: Elizabeth Trotter
